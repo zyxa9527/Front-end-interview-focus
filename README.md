@@ -246,3 +246,6 @@ React 渲染異常的時候, 在沒有做任何攔截的情況下, 會出現頁�
 
 ![image](https://user-images.githubusercontent.com/60773919/191454479-be2e7b13-6fd0-496b-8f55-2da031f2b5db.png) 
 
+## 參考影片
+[前端知識](https://www.youtube.com/watch?v=Ku4ejcTpteo)
+[演算法](https://www.youtube.com/watch?v=d-Lj4s6307c)
