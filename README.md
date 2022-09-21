@@ -249,3 +249,4 @@ React 渲染異常的時候, 在沒有做任何攔截的情況下, 會出現頁�
 ## 參考影片
 [前端知識](https://www.youtube.com/watch?v=Ku4ejcTpteo)
 [演算法](https://www.youtube.com/watch?v=d-Lj4s6307c)
+[全部影片](https://www.youtube.com/playlist?list=PLHpfx416EzLPcj1JItKYftQDv8ghtoiXQ)
