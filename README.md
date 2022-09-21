@@ -1,4 +1,4 @@
-# 20個React的重點
+# 20個React的面試重點
 ## 1. 解釋 React 是什麼
 React是一個網頁框架，通過組件化的方式解決視圖層開發復用的問題，本質是一個組件化框架。
 
@@ -165,12 +165,84 @@ React 的 diff 算法, 觸發更新的時機主要在 state 的變化或是 prop
 ![image](https://user-images.githubusercontent.com/60773919/191203996-ac159504-7c90-4713-ac22-397479939afb.png)
 
 ## 12.React 的渲染異常會造成什麼後果
-React 渲染異常的時候, 在沒有做任何攔截的情況下, 會出現頁面白屏的現象, 他的呈現原因是在渲染層出現javascript錯誤, 導致整個應用崩潰, 這種錯誤通常是在 render 中沒有控制好空安全, 取到了空值
+React 渲染異常的時候, 在沒有做任何攔截的情況下, 會出現頁面白屏的現象, 他的呈現原因是在渲染層出現 javascript 錯誤, 導致整個應用崩潰, 這種錯誤通常是在 render 中沒有控制好空安全, 取到了空值
 
 ![image](https://user-images.githubusercontent.com/60773919/191206911-e9518b7f-0c9c-4064-a204-de46485e1aeb.png)
 
 ## 13.如何分析和優化效能
 
+### 指標
+- FCP 首次繪製內容的耗時
+- TTI 頁面可互動的時間
+- Page Load 頁面加載時間
+- FPS 前端頁面偵率
+- 靜態資源及 API 成功率
 
+### 效能
+通常效能優化必須配合公司業務的情況, 來找尋適合的優化指標, 這裡我舉之前負責過的專案, 在進行優化前, 用戶一開始開啟網頁時需耗時5秒多的時間, 根據 GOOGLE 的研究顯示當用戶開啟網頁時間超過3秒則會降低用戶的留存率, 所以我根據他們的 RAIL 模型指標, 使用 Lighthouse 工具進行檢測, 查看哪些分數是較低的, 首先我使用預渲染的方式將SPA轉成類似SSR的模式來提升首次繪製內容的耗時, 再來使用懶加載的方式還有Webpack打包共同的chunk讓頁面加載時間變快, 對於靜態資源則盡量使用CDN, 域名解析失敗就自動切換方案, 在經過優化之後, 開啟網頁的時間下降到了2秒多, 速度上升了75%
 
-## 14.跨組件溝通
+### SEO
+而 SEO 的部分, 首先我使用 JSON-LD 處理結構化資料, 並且生成 sitemap 的 xml 文件, 提交到 google 上形成網站地圖, 另外我還使用了PWA增進用戶的體驗
+
+![image](https://user-images.githubusercontent.com/60773919/191420418-9029866b-43cc-4417-b259-1248bef10712.png)
+
+## 14.如何避免重複選染
+首先要先評估是否需要進行優化, 例如不同的瀏覽器或是過慢的網速是否有必要優化, 確定情況之後, 可以先使用 Performance 工具進行檢測, 看是哪個地方造成卡頓的問題, 通常是使用 usememo 的方式來緩存資料, 也可以使用 immer.js不可變數據來減少重複渲染
+
+![image](https://user-images.githubusercontent.com/60773919/191421370-929c888d-8711-4dc9-b6cc-7cb47b767ed2.png)
+
+## 15.如何提升 React 程式碼可維護性
+### 可分析
+- Code Review
+- ESLint
+### 可擴展
+- 組件設計模式
+- 狀態框架Redux
+### 穩定性
+- 單元測試
+### 可測試
+- 純函數
+
+![image](https://user-images.githubusercontent.com/60773919/191423522-05124463-b1d9-4814-a024-234500c8d7c9.png)
+
+## 16.React Hook 的使用限制有哪些
+不要在循環或條件下使用 Hook, 要在 React 函數組件中調用, 可以使用 ESLint 避免
+
+為何要使用 React Hook
+- 組件難以複用邏輯
+- 複雜組件難以拆分
+- this容易混淆
+
+![image](https://user-images.githubusercontent.com/60773919/191428245-c862cf73-8ced-44c0-9a1a-11ae3f27834a.png)
+
+## 17.useeffect 和 useLayouteffect 差別在哪
+如果有直接操作 DOM 或是畫面閃爍則推薦使用 useLayouteffect, 其他功能一樣, 會在頁面渲染完成時調用, 並且提供第二個參數去 dependencies 是否改變接著調用
+
+![image](https://user-images.githubusercontent.com/60773919/191432634-669ba450-843e-45e2-b273-74c4c8c9073a.png)
+
+## 18.React Hook 的設計模式
+拋棄生命週期的思考方式, 採用外觀模式, 把邏輯封裝到各自的自訂 Hook 中
+例: 過去類組件的開發模式中, 在mount放監聽事件後, 還需要取消監聽, 在 Hook 思路上可以把監聽與取消監聽放到同一個 useeffect 中, useeffect不需要關心生命週期, 只需要關心外部依賴
+
+## 19.React Router 的設計原理和工作方式
+
+![image](https://user-images.githubusercontent.com/60773919/191449235-2869a6c9-0c8e-4015-a378-48c1b7d2f1ee.png) 
+
+## 20.React 中常用的工具
+- 初始化 create-react-app
+- 路由 React-router
+- 樣式 styled-components
+- 基礎組件 Antd
+- 功能組件 
+  1. react-dnd, react-draggable 拖曳
+  2. react-pdf-viewer 預覽PDF
+  3. Video-React 播放影片
+  4. react-window, virtualized 解決長列表
+- 狀態管理 Redux
+- 打包 webpack, esbuild
+- 規範 ESLint
+- 測試 jest, react-testing-library
+- 發布 s3-plugin-webpack插件處裡靜態資源上傳
+
+![image](https://user-images.githubusercontent.com/60773919/191454479-be2e7b13-6fd0-496b-8f55-2da031f2b5db.png) 
+
